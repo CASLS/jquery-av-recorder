@@ -12,19 +12,19 @@
 
     var $element = $(this);// $('#' + id);
     var $inputFid = $('#' + $(this).attr('id') + '-fid');//$('#' + id + '-fid');
-    var $statusWrapper = $element.find('.media-recorder-status');
-    var $previewWrapper = $element.find('.media-recorder-preview');
-    var $progressWrapper = $element.find('.media-recorder-progress');
-    var $video = $element.find('.media-recorder-video');
-    var $audio = $element.find('.media-recorder-audio');
-    var $meter = $element.find('.media-recorder-meter');
-    var $startButton = $element.find('.media-recorder-enable');
-    var $recordButton = $element.find('.media-recorder-record');
-    var $stopButton = $element.find('.media-recorder-stop');
-    var $playButton = $element.find('.media-recorder-play');
-    var $settingsButton = $element.find('.media-recorder-settings');
-    var $videoButton = $element.find('.media-recorder-enable-video');
-    var $audioButton = $element.find('.media-recorder-enable-audio');
+    var $statusWrapper = $element.find('.av-recorder-status');
+    var $previewWrapper = $element.find('.av-recorder-preview');
+    var $progressWrapper = $element.find('.av-recorder-progress');
+    var $video = $element.find('.av-recorder-video');
+    var $audio = $element.find('.av-recorder-audio');
+    var $meter = $element.find('.av-recorder-meter');
+    var $startButton = $element.find('.av-recorder-enable');
+    var $recordButton = $element.find('.av-recorder-record');
+    var $stopButton = $element.find('.av-recorder-stop');
+    var $playButton = $element.find('.av-recorder-play');
+    var $settingsButton = $element.find('.av-recorder-settings');
+    var $videoButton = $element.find('.av-recorder-enable-video');
+    var $audioButton = $element.find('.av-recorder-enable-audio');
 
     var recording = false;
     var audioContext = null;
@@ -472,15 +472,15 @@
 	            var request = new XMLHttpRequest();
 	            request.open('POST', origin + '/media/record-file', true);
 	            $(".loader").show();
-	            var height = $(".media-recorder-preview").css("height");
+	            var height = $(".av-recorder-preview").css("height");
 	            $video.hide();
-	            $(".media-recorder-preview").css("height",height);
+	            $(".av-recorder-preview").css("height",height);
 	            request.onload = function (evt) {
 	                var jsonObj = JSON.parse(request.response);
 		            $element.trigger('refreshData', jsonObj.data.mediaBlob);
 		            $element.trigger('uploadFinished', jsonObj.data);
 		            $(".loader").hide();
-		            $(".media-recorder-preview").css("height", "auto");
+		            $(".av-recorder-preview").css("height", "auto");
 //		            $video.show();
 		            
 	            };
