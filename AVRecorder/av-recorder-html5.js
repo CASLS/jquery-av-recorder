@@ -231,7 +231,7 @@
 	  
       // Send file.
       request.addEventListener("load", transferComplete, false);
-      request.open('POST', origin + '/media/record-file', true);
+      request.open('POST', settings.server_upload_endpoint, true);
       request.send(formData);
       $(".loader").show();
       var height = $(".av-recorder-preview").css("height");

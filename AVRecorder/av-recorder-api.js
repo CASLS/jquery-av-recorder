@@ -470,7 +470,7 @@
 	            
 	            
 	            var request = new XMLHttpRequest();
-	            request.open('POST', origin + '/media/record-file', true);
+	            request.open('POST', settings.server_upload_endpoint, true);
 	            $(".loader").show();
 	            var height = $(".av-recorder-preview").css("height");
 	            $video.hide();

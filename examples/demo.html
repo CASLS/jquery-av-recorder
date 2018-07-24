@@ -33,6 +33,11 @@
 <body>
 	<div class="col-xs-12 col-md-6 col-md-offset-3">
 		<br/><br/>
+		<select id="audioVideoControl" class="form-control">
+			<option value="1">Audio Only</option>
+			<option value="2">Audio & Video</option>
+		</select>
+		<br/>
 		<div id="avRecorder-fallback-ajax-wrapper"></div>
 		<div id="avRecorder" class="">
 			<div class="av-recorder panel panel-primary">
@@ -92,25 +97,41 @@
 	</div>
 	
 	<script type="text/javascript">
+		var audio = true;
+		var video = false;
 		$(document).ready(function(){
+			createRecorder();
+			
+			$("#audioVideoControl").change(function(){
+				if($(this).val() == 1){
+					audio = true;
+					video = false;
+				}else if($(this).val() == 2){
+					audio = true;
+					video = true;
+				}
+				createRecorder();
+			});
+			
+			$("#avRecorder").bind('uploadFinished', function (event, data) {
+				console.log("uploadFinished");
+				console.log(data);
+			});
+		});
+	
+		function createRecorder(){
 			$("#avRecorder").AvRecorder('avRecorder',{
 	        	constraints: {
-	        		audio: true,
-	            	video: true,
+	        		audio: audio,
+	            	video: video,
 	            	video_resolution: "320"
 	        	},
 	        	file: null,
 	        	time_limit: "1800",
 	        	chunk_audio_blob: false, //ONLY Available for Firefox MediaRecorderAPI
-	        	upload_location: "/common/uploads/recordings"
+	        	server_upload_endpoint: "/jquery-av-recorder/examples/demoRecordFile.php" //Will be appended to the window.orign that the request is coming from.
 	        });
-			$("#avRecorder").bind('uploadFinished', function (event, data) {
-				console.log("uploadFinished");
-				console.log(data);
-				$("#worksample-media_id").val(data.media.id);
-			});
-		});
-	
+		};
 		
 	</script>
 </body>
