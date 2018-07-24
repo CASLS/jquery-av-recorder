@@ -1,0 +1,125 @@
+/**
+ * @file
+ * Default CSS for the av recorder element.
+ */
+
+.av-recorder-wrapper {
+  padding: 10px;
+  margin: 0;
+  background: #323232;
+  border: none;
+  color: #fff;
+  max-width: 300px;
+}
+
+.av-recorder {
+  width: 100%;
+}
+
+.av-recorder-status {
+  /* background: #222222; */
+  padding: 5px 10px;
+  margin: 5px 0;
+  /* box-shadow: inset 0 0 10px #000000; */
+  text-align: center;
+}
+
+.av-recorder-preview {
+  background: #222222;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.av-recorder-preview canvas.av-recorder-meter {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+}
+
+.av-recorder-progress {
+  height: 20px;
+  overflow: hidden;
+  background: #222222;
+  box-shadow: inset 0 0 10px #000000;
+}
+
+.av-recorder-progress .progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: #fff;
+  text-align: center;
+  background-color: #337ab7;
+}
+
+.av-recorder-video {
+  width: 100%;
+  padding: 5px 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.av-recorder-audio {
+  width: 100%;
+  padding: 5px 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.av-recorder-controls {
+  text-align: center;
+  padding: 5px;
+}
+
+.av-recorder-controls button {
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  /* padding: 5px 10px; */
+  cursor: pointer;
+}
+
+.av-recorder-enable {
+  background: #8AC63F;
+}
+
+.av-recorder-settings {
+  background: #00a5e1;
+}
+
+.av-recorder-record {
+  background: #FF4D4D;
+}
+
+.av-recorder-play {
+  background: #2861ff;
+}
+
+.av-recorder-stop {
+  background: #ffa42a;
+}
+
+button.av-recorder-enable-audio, 
+button.av-recorder-enable-video {
+  color: #000;
+}
+
+#flash-wrapper {
+  text-align: center;
+}
+
+.av-recorder > .panel-heading{
+	background:#26A9E0;
+} 
+
+.av-recorder .panel-primary{
+	border-color:#26A9E0;
+}
