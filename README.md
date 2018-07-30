@@ -1,7 +1,9 @@
-Initial README file.
+jQuery AV Recorder
+========================
+This project contains a jQuery plugin that that renders an audio and/or video recorder using HTML5 standards.  It uses the WebRTC MediaDevices.getUserMedia() standard as well as [Recorder.js](https://github.com/mattdiamond/Recorderjs) to record audio and video directly through the web browser (without the need for Flash).  This project also uses [Twitter Bootstrap 3.3+](https://getbootstrap.com/docs/3.3/getting-started/) for the UI components.
 
-## Config
-```JSON
+## Config Options
+```Javascript
 {
 	constraints: {
 		audio: true,
@@ -25,7 +27,7 @@ Initial README file.
 
 ## Dependencies
 * [jQuery](https://jquery.com)
-* [RecorderJS](https://github.com/mattdiamond/Recorderjs)
+* [Recorder.js](https://github.com/mattdiamond/Recorderjs)
 * [Twitter Bootstrap](https://getbootstrap.com/docs/3.3/getting-started/)
 
 
