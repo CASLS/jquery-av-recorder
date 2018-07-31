@@ -289,13 +289,6 @@
 		$stopButton.hide();
 		recordingPreview();
 		
-//		if (constraints.video) {
-//			createVolumeMeter();
-//		}
-//		else {
-//			createAudioVisualizer();
-//		}
-		
 		setStatus('Press record to start recording.');
       })
       .catch(function(err) {
@@ -305,41 +298,6 @@
 //        alert("There was a problem accessing your camera or mic. Please click 'Allow' at the top of the page.");
     	  setStatus(err.message);
       });
-      
-//      navigator.getUserMedia(
-//        constraints,
-//        function (stream) {
-//          localStream = stream;
-//          recordURL = URL.createObjectURL(localStream);
-//          mimetype = settings.constraints.video ? 'video/webm' : 'audio/ogg';
-//          audioContext = new AudioContext();
-//          analyser = audioContext.createAnalyser();
-//          analyser.smoothingTimeConstant = 0.75;
-//          analyser.fftSize = 512;
-//          microphone = audioContext.createMediaStreamSource(stream);
-//          recorder = new Recorder(microphone, {workerPath: '/recorderWorker.js'});
-//
-//          $previewWrapper.show();
-//          $meter.show();
-//          $startButton.hide();
-//          $recordButton.show();
-//          $stopButton.hide();
-//          recordingPreview();
-//
-//          if (constraints.video) {
-//            createVolumeMeter();
-//          }
-//          else {
-//            createAudioVisualizer();
-//          }
-//
-//          setStatus('Press record to start recording.');
-//        },
-//        function (error) {
-//          stopStream();
-//          alert("There was a problem accessing your camera or mic. Please click 'Allow' at the top of the page.");
-//        }
-//      );
     }
 
     /**
@@ -383,14 +341,14 @@
      * Start recording and trigger recording event.
      */
     function record() {
-      recorder.record();
-      $element.trigger('recordStart');
-      if (constraints.video) {
-        createVolumeMeter();
-      }
-      else {
-        createAudioVisualizer();
-      }
+    	if (constraints.video) {
+    		createVolumeMeter();
+    	}
+        else {
+            createAudioVisualizer();
+        }
+    	recorder.record();
+    	$element.trigger('recordStart');
     }
 
     /**

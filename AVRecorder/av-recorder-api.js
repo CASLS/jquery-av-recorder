@@ -318,6 +318,16 @@
         	    let error = event.error;
         	    console.log(error);
           };
+          // Send blob chunk to server when ondataavailable is triggered.
+          recorder.ondataavailable = function (e) {
+	  			//Save audio blob to the blobs queue
+	  			blobs = [];
+	  			var blob = new Blob([e.data], {type: mimetype});
+	  			blobs.push(blob);
+	  			
+	  			sendBlob(blob);
+          };
+          
           audioContext = new AudioContext();
           analyser = audioContext.createAnalyser();
           analyser.smoothingTimeConstant = 0.75;
@@ -333,58 +343,14 @@
           $stopButton.hide();
           recordingPreview();
 
-//          if (constraints.video) {
-//            createVolumeMeter();
-//          }
-//          else {
-//            createAudioVisualizer();
-//          }
-
           setStatus('Press record to start recording.');
       })
       .catch(function(err) {
 //    	  	stopStream();
 //        alert("There was a problem accessing your camera or mic. Please click 'Allow' at the top of the page.");
+    	  console.log(err);
     	  setStatus(err.message);
       });
-      
-//      navigator.getUserMedia(
-//        constraints,
-//        function (stream) {
-//          localStream = stream;
-//          recorder = new MediaRecorder(localStream);
-//          recordURL = URL.createObjectURL(localStream);
-//          format = constraints.video ? 'webm' : 'ogg';
-//          mimetype = constraints.video ? 'video/webm' : 'audio/ogg';
-//          audioContext = new AudioContext();
-//          analyser = audioContext.createAnalyser();
-//          analyser.smoothingTimeConstant = 0.75;
-//          analyser.fftSize = 512;
-//          microphone = audioContext.createMediaStreamSource(stream);
-//
-//          $previewWrapper.show();
-//          $meter.show();
-//          $startButton.hide();
-//          $videoButton.hide();
-//          $audioButton.hide();
-//          $recordButton.show();
-//          $stopButton.hide();
-//          recordingPreview();
-//
-//          if (constraints.video) {
-//            createVolumeMeter();
-//          }
-//          else {
-//            createAudioVisualizer();
-//          }
-//
-//          setStatus('Press record to start recording.');
-//        },
-//        function (error) {
-//          stopStream();
-//          alert("There was a problem accessing your camera or mic. Please click 'Allow' at the top of the page.");
-//        }
-//      );
     }
 
     /**
@@ -433,135 +399,53 @@
     	  canvasContext = null;
       }
     }
+    
+    function sendBlob(blob){
+    	//send audioBlob to server
+        var formData = new FormData();
+        formData.append("mediaBlob", blob, "blob");
+        formData.append("fileName",'mediaBlob.webm');
+        formData.append("mimeType",mimetype);
+        if (navigator.userAgent.indexOf("Firefox")  > -1){
+        	formData.append("isFirefox",true);
+        }else{
+        	formData.append("isFirefox",false);
+        }
+        
+        
+        var request = new XMLHttpRequest();
+        request.open('POST', settings.server_upload_endpoint, true);
+        $(".loader").show();
+        var height = $(".av-recorder-preview").css("height");
+        $video.hide();
+        $(".av-recorder-preview").css("height",height);
+        request.onload = function (evt) {
+            var jsonObj = JSON.parse(request.response);
+            $element.trigger('refreshData', jsonObj.data.mediaBlob);
+            $element.trigger('uploadFinished', jsonObj.data);
+            $(".loader").hide();
+            $(".av-recorder-preview").css("height", "auto");
+//            $video.show();
+            
+        };
+        request.onerror = function (evt) {
+        	console.log(Error("Error fetching data."));
+        };
+        request.send(formData);
+    }
 
     /**
      * Start recording and trigger recording event.
      */
     function record() {
-    	
 		if (constraints.video) {
-	        createVolumeMeter();
-	      }
-	      else {
-	        createAudioVisualizer();
-	      }
-    	
-	  if(settings.chunk_audio_blob == false){
-		  recorder.start();
-          $element.trigger('recordStart');
-
-		// Send blob chunk to server when ondataavailable is triggered.
-	      recorder.ondataavailable = function (e) {
-		    	//Save audio blob to the blobs queue
-		    	blobs = [];
-	            var blob = new Blob([e.data], {type: mimetype});
-	            blobs.push(blob);
-	            
-	            //send audioBlob to server
-	            var formData = new FormData();
-	            formData.append("mediaBlob", e.data, "blob");
-	            formData.append("fileName",'mediaBlob.webm');
-	            formData.append("mimeType",mimetype);
-	            if (navigator.userAgent.indexOf("Firefox")  > -1){
-	            	formData.append("isFirefox",true);
-	            }else{
-	            	formData.append("isFirefox",false);
-	            }
-	            
-	            
-	            var request = new XMLHttpRequest();
-	            request.open('POST', settings.server_upload_endpoint, true);
-	            $(".loader").show();
-	            var height = $(".av-recorder-preview").css("height");
-	            $video.hide();
-	            $(".av-recorder-preview").css("height",height);
-	            request.onload = function (evt) {
-	                var jsonObj = JSON.parse(request.response);
-		            $element.trigger('refreshData', jsonObj.data.mediaBlob);
-		            $element.trigger('uploadFinished', jsonObj.data);
-		            $(".loader").hide();
-		            $(".av-recorder-preview").css("height", "auto");
-//		            $video.show();
-		            
-	            };
-	            request.onerror = function (evt) {
-	            	console.log(Error("Error fetching data."));
-	            };
-	            request.send(formData);
-//	          }));
-	      };
-	  }else if (settings.chunk_audio_blob == true){
-	      var promises = [];
-	      blobs = [];
-	      blobCount = 0;
-	
-	      // Send blob chunk to server when ondataavailable is triggered.
-	      recorder.ondataavailable = function (e) {
-	        var blob = new Blob([e.data], {type: e.data.type || mimetype});
-	        if (blob.size > 0) {
-	          blobs.push(blob);
-	          blobCount++;
-	          promises.push(new Promise(function (resolve, reject) {
-	            var formData = new FormData();
-	            formData.append("blob", blob);
-	            formData.append("count", blobCount);
-	            var request = new XMLHttpRequest();
-	            request.open('POST', origin + '/media-upload/record-stream-record', true);
-	            request.onload = function (evt) {
-	              if (request.status === 200) {
-	                resolve(request.response);
-	              }
-	              else {
-	                reject(Error(request.statusText));
-	              }
-	            };
-	            request.onerror = function (evt) {
-	              reject(Error("Error fetching data."));
-	            };
-	            request.send(formData);
-	          }));
-	        }
-	      };
-	
-	      // Notify server that recording has stopped when onstop is triggered.
-	      recorder.onstop = function (e) {
-	        Promise.all(promises).then(function (data) {
-	          var request = new XMLHttpRequest();
-	          var formData = new FormData();
-	          formData.append("mediaRecorderUploadLocation", conf.upload_location);
-	          request.open('POST', origin + '/media-upload/record-stream-finish', true);
-	          request.onload = function (evt) {
-	            var file = JSON.parse(request.response);
-	            $element.trigger('refreshData', file);
-	          };
-	          request.onerror = function (evt) {
-	            alert('There was an issue saving your recording, please try again.');
-	          };
-	          request.send(formData);
-	        }).catch(function (error) {
-	          alert('There was an issue saving your recording, please try again.');
-	        });
-	      };
-	
-	      // Notify server that recording has started.
-	      var formData = new FormData();
-	      formData.append('format', format);
-	      var request = new XMLHttpRequest();
-	      request.open('POST', origin + '/media-upload/record-stream-start', true);
-	      request.onload = function (evt) {
-	        if (request.status === 200) {
-	          recorder.start(3000);
-	          $element.trigger('recordStart');
-	        }
-	        else {
-	          alert('There was an issue starting your recording, please try again.');
-	        }
-	      };
-	      request.onerror = function (evt) {
-	        alert('There was an issue starting your recording, please try again.');
-	      };
-	      request.send(formData);
-	  }
+			createVolumeMeter();
+	    }
+	    else {
+	    	createAudioVisualizer();
+	    }
+		recorder.start();
+        $element.trigger('recordStart');
     }
 
     /**
