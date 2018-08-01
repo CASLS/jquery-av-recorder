@@ -84,3 +84,6 @@ Temporary Items
 
 # Git Markdown View
 .README.md.html
+
+#npm
+node_modules/*

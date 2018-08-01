@@ -1,0 +1,34 @@
+{
+  "name": "@casls/jquery-av-recorder",
+  "version": "1.0.0",
+  "description": "jQuery AV Recorder is a configurable plugin that renders an audio and/or video recorder using HTML5 standards.",
+  "main": "AVRecorder/av-recorder.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CASLS/jquery-av-recorder.git"
+  },
+  "keywords": [
+    "jquery",
+    "audio",
+    "video",
+    "recorder",
+    "jquery-plugin"
+  ],
+  "author": "Carl Burnstein",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/CASLS/jquery-av-recorder/issues"
+  },
+  "homepage": "https://github.com/CASLS/jquery-av-recorder#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.3.1",
+    "recorderjs": "file:../recorderJs/recorder.js"
+  }
+}
