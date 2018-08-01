@@ -158,12 +158,14 @@
         }
 
         barWidth = Math.ceil($meter[0].width / (analyser.frequencyBinCount * 0.5));
-        canvasContext.clearRect(0, 0, $meter[0].width, $meter[0].height);
-        for (var i = 0; i < analyser.frequencyBinCount; i++) {
-          canvasContext.fillStyle = 'hsl(' + i / analyser.frequencyBinCount * 360 + ', 100%, 50%)';
-          if ((barWidth * i) + barWidth < $meter[0].width) {
-            canvasContext.fillRect(barWidth * i, $meter[0].height, barWidth - 1, -(Math.floor((freqData[i] / 255) * $meter[0].height)));
-          }
+        if(canvasContext != null){
+	        canvasContext.clearRect(0, 0, $meter[0].width, $meter[0].height);
+	        for (var i = 0; i < analyser.frequencyBinCount; i++) {
+	          canvasContext.fillStyle = 'hsl(' + i / analyser.frequencyBinCount * 360 + ', 100%, 50%)';
+	          if ((barWidth * i) + barWidth < $meter[0].width) {
+	            canvasContext.fillRect(barWidth * i, $meter[0].height, barWidth - 1, -(Math.floor((freqData[i] / 255) * $meter[0].height)));
+	          }
+	        }
         }
       };
     }
@@ -258,6 +260,13 @@
     function stopStream() {
       analyser.disconnect();
       microphone.disconnect();
+      if(visualizerProcessor != null){
+    	  visualizerProcessor.disconnect();
+      }
+      if(meterProcessor != null){
+    	  meterProcessor.disconnect();
+      }
+      localStream.getTracks().forEach(track => track.stop());
 //      localStream.stop();
 //      $previewWrapper.hide();
 //      $startButton.show();
@@ -268,7 +277,7 @@
     /**
      * Start user media stream.
      */
-    function startStream() {
+    function startStream(callback = null) {
       if (localStream) {
         stopStream();
       }
@@ -294,6 +303,9 @@
 		recordingPreview();
 		
 		setStatus('Press record to start recording.');
+		if(callback != null){
+      	  callback();
+        }
       })
       .catch(function(err) {
         /* handle the error */
@@ -353,8 +365,16 @@
         else {
             createAudioVisualizer();
         }
-    	recorder.record();
-    	$element.trigger('recordStart');
+    	if(localStream.active == false){
+			startStream(function(){
+				$recordButton.hide();
+		        $stopButton.show();
+				record();
+			});
+		}else{
+			recorder.record();
+			$element.trigger('recordStart');
+		}
     }
 
     /**
