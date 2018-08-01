@@ -28,7 +28,6 @@
   "homepage": "https://github.com/CASLS/jquery-av-recorder#readme",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "jquery": "^3.3.1",
-    "recorderjs": "file:./recorderJs/recorder.js"
+    "jquery": "^3.3.1"
   }
 }
