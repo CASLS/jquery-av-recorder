@@ -1,6 +1,6 @@
 {
   "name": "@casls/jquery-av-recorder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "jQuery AV Recorder is a configurable plugin that renders an audio and/or video recorder using HTML5 standards.",
   "main": "AVRecorder/av-recorder.js",
   "directories": {
