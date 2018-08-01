@@ -7,8 +7,15 @@ header('Content-Type: application/json');
 
 $fileName = null;
 $content = null;
+
+$mime_type = $_POST['mimeType'];
+$ext = ".webm";
+if($mime_type == "audio/mpeg"){
+	$ext = ".mp3";
+}
+
 $uploadDir = getcwd() . "/uploads/";
-$newFileName = date('Ymd-His') . "_" . rand(100,999) . ".webm";
+$newFileName = date('Ymd-His') . "_" . rand(100,999) . $ext;
 $url = "/jquery-av-recorder/examples/uploads/" . $newFileName;
 
 if (isset($_FILES['mediaBlob'])){

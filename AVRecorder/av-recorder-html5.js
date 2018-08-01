@@ -208,7 +208,7 @@
         $video[0].load();
       }
       else {
-//        playbackURL = URL.createObjectURL(new Blob(blobs, {type: mimetype}));
+        playbackURL = URL.createObjectURL(new Blob(blobs, {type: mimetype}));
         $audio.show();
         $audio[0].src = playbackURL;
         $audio[0].load();
@@ -226,7 +226,11 @@
       blobs = [blob];
       formData.append("mediaBlob", blob);
       formData.append("mediaRecorderUploadLocation", conf.upload_location);
-	  formData.append("fileName",'mediaBlob.webm');
+      if(constraints.video){
+    	  formData.append("fileName",'mediaBlob.webm');
+      }else{
+    	  formData.append("fileName",'mediaBlob.mp3');
+      }
 	  formData.append("mimeType",mimetype);
 	  
       // Send file.
@@ -254,11 +258,11 @@
     function stopStream() {
       analyser.disconnect();
       microphone.disconnect();
-      localStream.stop();
-      $previewWrapper.hide();
-      $startButton.show();
-      $recordButton.hide();
-      $stopButton.hide();
+//      localStream.stop();
+//      $previewWrapper.hide();
+//      $startButton.show();
+//      $recordButton.hide();
+//      $stopButton.hide();
     }
 
     /**
@@ -274,7 +278,7 @@
         /* use the stream */
     	localStream = stream;
 //		recordURL = URL.createObjectURL(localStream);
-		mimetype = settings.constraints.video ? 'video/webm' : 'audio/ogg';
+		mimetype = settings.constraints.video ? 'video/webm' : 'audio/mpeg';
 		audioContext = new AudioContext();
 		analyser = audioContext.createAnalyser();
 		analyser.smoothingTimeConstant = 0.75;
@@ -335,6 +339,8 @@
     	  canvasContext.fillRect(0, 0, $meter[0].width, $meter[0].height);
     	  canvasContext = null;
       }
+      
+      stopStream();
     }
 
     /**

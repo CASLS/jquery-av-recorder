@@ -288,14 +288,14 @@
     function stopStream() {
       analyser.disconnect();
       microphone.disconnect();
-      localStream.stop();
-      $previewWrapper.hide();
-      $startButton.show();
-      $recordButton.hide();
-      $stopButton.hide();
-      $videoButton.hide();
-      $audioButton.hide();
-      setStatus('Click \'Start\' to enable your mic & camera.');
+//      localStream.stop();
+//      $previewWrapper.hide();
+//      $startButton.show();
+//      $recordButton.hide();
+//      $stopButton.hide();
+//      $videoButton.hide();
+//      $audioButton.hide();
+//      setStatus('Click \'Start\' to enable your mic & camera.');
     }
 
     /**
@@ -398,13 +398,15 @@
     	  canvasContext.fillRect(0, 0, $meter[0].width, $meter[0].height);
     	  canvasContext = null;
       }
+      
+      stopStream();
     }
     
     function sendBlob(blob){
     	//send audioBlob to server
         var formData = new FormData();
         formData.append("mediaBlob", blob, "blob");
-        formData.append("fileName",'mediaBlob.webm');
+      	formData.append("fileName",'mediaBlob.webm');
         formData.append("mimeType",mimetype);
         if (navigator.userAgent.indexOf("Firefox")  > -1){
         	formData.append("isFirefox",true);
