@@ -16,6 +16,31 @@ For additional details on browser capabilities:
 * [MDN MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#Browser_compatibility)
 * [caniuse.com MediaRecorder API](https://caniuse.com/#search=MediaRecorder)
 
+## Usage
+
+You MUST include the needed dependencies in the `<head>` section. See [examples/demo.php](examples/demo.php) for examples.
+
+```Html
+<!-- Don't forget the dependencies. -->
+<div id="avRecorder" class=""></div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#avRecorder").AvRecorder('avRecorder',{
+			constraints: {
+				audio: true,
+				video: true,
+				video_resolution: "320"
+			},
+			file: null,
+			time_limit: "1800",
+			server_upload_endpoint: "/jquery-av-recorder/examples/demoRecordFile.php" //Will be appended to the window.orign that the request is coming from.
+		});
+	});
+</script>
+
+```
+
 ## Config Options
 ```Javascript
 {
