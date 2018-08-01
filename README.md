@@ -2,6 +2,20 @@ jQuery AV Recorder
 ========================
 This project contains a jQuery plugin that that renders an audio and/or video recorder using HTML5 standards.  It uses the WebRTC MediaDevices.getUserMedia() standard as well as [Recorder.js](https://github.com/mattdiamond/Recorderjs) to record audio and video directly through the web browser (without the need for Flash).  This project also uses [Twitter Bootstrap 3.3+](https://getbootstrap.com/docs/3.3/getting-started/) for the UI components.
 
+## Browser Support
+| Browser | Version | Audio | Video |
+| --- | --- | --- | --- |
+| Safari | 11+ | Yes | No |
+| Chrome | 53+ | Yes | Yes |
+| Firefox | 36+ | Yes | Yes |
+| Edge | 12+ | Yes | No |
+
+For additional details on browser capabilities: 
+* [MDN getUserMedia()](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia#Browser_compatibility)
+* [caniuse.com getUserMedia()](https://caniuse.com/#search=getUserMedia)
+* [MDN MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#Browser_compatibility)
+* [caniuse.com MediaRecorder API](https://caniuse.com/#search=MediaRecorder)
+
 ## Config Options
 ```Javascript
 {

@@ -109,6 +109,13 @@
 		<?php } ?>
 		$(document).ready(function(){
 			createRecorder();
+
+			var browserUserAgent = navigator.userAgent;
+			if(browserUserAgent.includes("Safari") == true && browserUserAgent.includes("Chrome") == false){
+				$("#audioVideoControl option")[1].remove();
+			}else if(browserUserAgent.includes("Edge") == true || browserUserAgent.includes("MSIE ") == true || browserUserAgent.includes("Trident") == true){
+		
+			}
 			
 			$("#audioVideoControl").change(function(){
 				if($(this).val() == 1){
