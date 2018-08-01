@@ -16,6 +16,28 @@ For additional details on browser capabilities:
 * [MDN MediaRecorder API](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/MediaRecorder#Browser_compatibility)
 * [caniuse.com MediaRecorder API](https://caniuse.com/#search=MediaRecorder)
 
+## Installation
+Download the jQuery AV Recorder library [here](https://github.com/CASLS/jquery-av-recorder/archive/master.zip).<br/>
+You **must** include the JS files in your `<head>` section of your website. Make sure you adjust file paths accordingly.
+```html
+<!-- Don't forget to include jQuery and Twitter Bootstrap! -->
+<!-- AV Recorder CSS -->
+<link href="../AVRecorder/av-recorder.css" rel="stylesheet">
+<!-- Progress Loader CSS -->
+<link href="../AVRecorder/loader.css" rel="stylesheet">
+<!-- RecorderJS library Jul 20, 2016 release -->
+<script src="../recorderJs/recorder.js"></script>
+<!-- jQuery AV Recorder JS -->
+<script src="../AVRecorder/av-recorder-api.js"></script>
+<script src="../AVRecorder/av-recorder-html5.js"></script>
+<script src="../AVRecorder/av-recorder.js"></script>
+```
+
+You can also install the jQuery AV Recorder with [npm](https://www.npmjs.com).
+```console
+npm install @casls/jquery-av-recorder
+```
+
 ## Usage
 
 You MUST include the needed dependencies in the `<head>` section. See [examples/demo.php](examples/demo.php) for examples.
