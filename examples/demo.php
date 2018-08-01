@@ -137,7 +137,6 @@
 	        	},
 	        	file: null,
 	        	time_limit: "1800",
-	        	chunk_audio_blob: false, //ONLY Available for Firefox MediaRecorderAPI
 	        	server_upload_endpoint: "/jquery-av-recorder/examples/demoRecordFile.php" //Will be appended to the window.orign that the request is coming from.
 	        });
 		};
