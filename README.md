@@ -57,7 +57,7 @@ You MUST include the needed dependencies in the `<head>` section. See [examples/
 
 | config | required | type | example | description |
 | --- | --- | --- | --- | --- |
-| `constraints` | yes | array |  | An array containing the settings to pass into getUserMedia() as constraints. | 
+| `constraints` | yes | array | <pre>{<br/>audio: true,<br/>video: true,<br/>video_resolution: "320"<br/>}</pre> | An array containing the settings to pass into getUserMedia() as constraints. | 
 | `file` | no | string | '/downloads/example.mp3' | A string of the path to an existing file. | 
 | `time_limit` | yes | string | '1800' | A string representing the max amount of time for a recording in seconds. |  
 | `server_upload_endpoint` | yes | string | '/media/record-file' | A string of the server endpoint that will be appended to the request's origin. | 
