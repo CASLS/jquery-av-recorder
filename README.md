@@ -91,4 +91,4 @@ You MUST include the needed dependencies in the `<head>` section. See [examples/
 
 
 ## Credit
-[Drupal Media Recorder Plugin](https://www.drupal.org/project/media_recorder) developed by the [Yamada Language Center](https://www.drupal.org/yamada-language-center)
+[Drupal Media Recorder Plugin](https://www.drupal.org/project/media_recorder) developed by the [Yamada Language Center](https://babel.uoregon.edu)
