@@ -12,12 +12,12 @@
   
 	$.fn.AvRecorder = function (id, conf) {
 		// Normalize features.
-		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.mediaDevices.getUserMedia;
 		window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext;
 		window.URL = window.URL || window.webkitURL;
 		
 		// Feature detection.
-		var getUserMediaCheck = typeof (navigator.getUserMedia) === 'function';
+		var getUserMediaCheck = typeof (navigator.getUserMedia || navigator.mediaDevices.getUserMedia) === 'function';
 		var mediaRecorderCheck = typeof (window.MediaRecorder) === 'function';
 		var webAudioCheck = typeof (window.AudioContext) === 'function';
 	
